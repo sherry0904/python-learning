@@ -1,0 +1,22 @@
+[
+    {
+        "day": "Monday",
+        "rain_probability": 20
+    },
+    {
+        "day": "Tuesday",
+        "rain_probability": 70
+    },
+    {
+        "day": "Wednesday",
+        "rain_probability": 40
+    },
+    {
+        "day": "Thursday",
+        "rain_probability": 10
+    },
+    {
+        "day": "Friday",
+        "rain_probability": 30
+    }
+]
