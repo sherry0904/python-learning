@@ -10,20 +10,24 @@ params = {
     "timezone": "Asia/Taipei"
 }
 
-data = {}
+def get_weather_data():
+    try:
 
-try:
+        response = requests.get(url, params=params)
 
-    response = requests.get(url, params=params)
-    if response.status_code == 200:
-        data = response.json()
-    else:
+        if response.status_code == 200:
+            return response.json()
+
+
         print("API 呼叫失敗，狀態碼:", response.status_code)
+        return {}
 
-except requests.RequestException:
-    print("API 呼叫發生例外狀況")
+    except requests.RequestException:
+        print("API 呼叫發生例外狀況")
+        return {}
 
-if data:
+
+def get_weather_summary(data):
     temperature = data["current"]["temperature_2m"]
     apparent_temperature = data["current"]["apparent_temperature"]
 
@@ -34,9 +38,19 @@ if data:
     current_hour = current_time[:13] + ":00"
 
     current_index = hourly_times.index(current_hour)
-
     current_rain_probability = rain_probabilities[current_index]
 
-    print("溫度", temperature)
-    print("體感溫度", apparent_temperature)
-    print("降雨機率:", current_rain_probability)
+    return {
+        "temperature": temperature,
+        "apparent_temperature": apparent_temperature,
+        "current_rain_probability": current_rain_probability
+    }
+
+data = get_weather_data()
+
+if data: 
+    summary = get_weather_summary(data)
+    
+    print("溫度:", summary["temperature"])
+    print("體感溫度:", summary["apparent_temperature"])
+    print("降雨機率:", summary["current_rain_probability"])
